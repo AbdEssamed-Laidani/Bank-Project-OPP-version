@@ -104,7 +104,6 @@ void ShowClientList()
 
 int main()
 {
-	cout << "hello world" << endl;
 	AddNew();
    return 0;
 }
