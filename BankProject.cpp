@@ -130,7 +130,6 @@ void ShowTotalBalances()
 
 int main()
 {
-
 	ShowTotalBalances();
 	
 	return 0;
