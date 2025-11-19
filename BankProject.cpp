@@ -1,16 +1,19 @@
 #include <iostream>
 #include "clsBankClient.h"
 #include "clsInputValidate.h"
+#include "clsUtil.h"
 using namespace std;
 
 void ReadClientInfo(clsBankClient &Client)
 {
+
 		Client.SetFirstName(clsInputValidate::ReadString("Enter your first name: "));
 		Client.SetLastName(clsInputValidate::ReadString("Enter your last name: "));
 		Client.SetEmail(clsInputValidate::ReadString("Enter your email: "));
 		Client.SetPhone(clsInputValidate::ReadString("Enter your phone number: "));
 		Client.SetPinCode(clsInputValidate::ReadString("Enter your pincode: "));
 		Client.SetBalance(clsInputValidate::ReadPositiveDoubleNumber("Enter your balance: "));
+
 }
 void UpdateClient()
 {
@@ -94,17 +97,41 @@ void PrintClientDataLine(clsBankClient& ClientData)
 void ShowClientList()
 {
 	vector <clsBankClient> vClient = clsBankClient::GetClientsList();
-	PrintHeader(vClient.size());
+	PrintHeader((int)vClient.size());
 	for (clsBankClient & C : vClient)
 	{
 		PrintClientDataLine(C);
 	}
 	cout << "-------------------------------------------------------------------------------------------------------------------------------" << endl;
 }
+void PrintClientRecordBalanceLine(clsBankClient& Client)
+{
+	cout << "|" << left << setw(35) << Client.GetAccountNumber() << right << " |" << left << setw(35) << Client.GetFullName() << right << " |" << left << setw(35) << Client.GetBalance() << right << "|" << endl;;
+
+}
+
+void ShowTotalBalances()
+{
+	vector <clsBankClient> vClient = clsBankClient::GetClientsList();
+	double total = clsBankClient::GetTotalBalances();
+	cout << "                                             Client List (" << vClient.size() << ")                                 " << endl << endl;
+	cout << "---------------------------------------------------------------------------------------------------------------" << endl;
+	cout << "|" << left << setw(35) << " Account Number" << right << " |" << left << setw(35) << " Client Name" << right << " |" << left << setw(35) << " Balance" << right << "|" << endl;;
+	cout << "---------------------------------------------------------------------------------------------------------------" << endl;
+	for (clsBankClient& C : vClient)
+	{
+		PrintClientRecordBalanceLine(C);
+	}
+	cout << "---------------------------------------------------------------------------------------------------------------" << endl;
+	cout << "                                             Total Balance = " << total << endl;
+	cout << "                                      (" << clsUtil::numberToWords((int)total) << ")\n\n";
+
+}
 
 int main()
 {
-	cout << "hello world" << endl;
-	AddNew();
-   return 0;
+
+	ShowTotalBalances();
+	
+	return 0;
 }

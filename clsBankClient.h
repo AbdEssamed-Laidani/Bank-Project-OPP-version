@@ -4,7 +4,6 @@
 #include <fstream>
 #include "clsString.h"
 #include "clsPerson.h"
-
 class clsBankClient:public clsPerson
 {
 	enum enMode { EmptyMode = 0, UpdateMode = 1, AddNewMode = 2 };
@@ -197,9 +196,11 @@ public:
 		case enMode::EmptyMode:
 			if(isEmpty())
 			return enSaveResult::svFailedEmpty;
+			break;
 		case enMode::UpdateMode:
 			_Update();
 			return enSaveResult::svSucceded;
+			break;
 		case enMode::AddNewMode:
 			if (clsBankClient::IsClientExist(_AccountNumber))
 				return enSaveResult::svFaiedExist;
@@ -209,7 +210,11 @@ public:
 				_Mode = enMode::UpdateMode;
 				return enSaveResult::svSucceded;
 			}
+			break;
+		default:
+			break;
 		}
+		return enSaveResult::svFailedEmpty;
 	}
 	bool Delete(const std::string &AccountNumbeer)
 	{
@@ -230,5 +235,18 @@ public:
 	{
 		return _LoadDataFromFile();
 	}
+
+	static double GetTotalBalances()
+	{
+		std::vector <clsBankClient> vClient = _LoadDataFromFile();
+		double total = 0;
+		for (clsBankClient& i : vClient)
+		{
+			total = total + i.GetBalance();
+		}
+		return total;
+	}
+
+	
 };
 

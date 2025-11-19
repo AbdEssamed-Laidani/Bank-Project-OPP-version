@@ -3,14 +3,106 @@
 #include "clsDate.h"
 #include "clsstring.h"
 #include <fstream>
+#include <string>
+#include <vector>
 class clsUtil
 {
+private:
+        inline static std::vector <std::string> Ones = {
+            "", "One ", "Two ", "Three ", "Four ",
+            "Five ", "Six ", "Seven ", "Eight ", "Nine "
+        };
+        inline static std::vector <std::string> Teens = {
+            "","Eleven ", "Twelve ", "Thirteen ", "Fourteen ", "Fifteen ",
+            "Sixteen ", "Seventeen ", "Eighteen ", "Nineteen "
+        };
+        inline static std::vector <std::string> Tens = {
+            "","Ten ", "Twenty ", "Thirty ", "Forty ", "Fifty ",
+            "Sixty ", "Seventy ", "Eighty ", "Ninety "
+        };
+
+        inline static std::vector <std::string> Scales = {
+            "","Thousand ", "Million ", "Billion "
+        };
+
+        static int getOnes(int number)
+        {
+            return number % 10;
+        }
+        static int getTens(int number)
+        {
+            return (number / 10) % 10;
+        }
+        static int getHundred(int number)
+        {
+
+            return (number / 100) % 10;;
+        }
+
+        static std::string _ConvertNumberToWord(int number)
+        {
+            std::string result = "";
+            int ones = getOnes(number);
+            int tens = getTens(number);
+            int hundred = getHundred(number);
+            if (hundred == 0)
+            {
+                if (tens == 0 && ones == 0)
+                    result += Ones.at(ones);
+                else if (tens == 0 && ones != 0)
+                {
+                    result += Ones.at(ones);
+                }
+                else if (tens == 1 && ones != 0)
+                {
+                    result += Teens.at(ones);
+                }
+                else if (tens != 0 && ones == 0)
+                {
+                    result += Tens.at(tens);
+                }
+                else if (tens > 1 && ones > 0)
+                {
+                    result += Tens.at(tens) + Ones.at(ones);
+                }
+            }
+            else
+            {
+                if (tens == 0 && ones != 0)
+                {
+                    result += Ones.at(hundred) + "Hundred " + Ones.at(ones);
+                }
+                else if (tens == 1 && ones != 0)
+                {
+                    result += Ones.at(hundred) + "Hundred " + Teens.at(ones);
+                }
+                else if (tens != 0 && ones == 0)
+                {
+                    result += Ones.at(hundred) + "Hundred " + Tens.at(tens);
+                }
+                else if (tens > 1 && ones > 0)
+                {
+                    result += Ones.at(hundred) + "Hundred " + Tens.at(tens) + Ones.at(ones);
+                }
+                else if (tens == 0 && ones == 0)
+                {
+                    result += Ones.at(hundred) + "Hundred ";
+                }
+
+            }
+            return result;
+        }
+
+        
+
+
+    
 public:
-    static enum IsPrime {
+     enum IsPrime {
         Prime,
         NotPrime
     };
-    static enum enCharactersType {
+     enum enCharactersType {
         None = 0,        // لا شيء
         SmallLetter = 1,   // الحروف الصغيرة
         CapitalLetter = 2,   // الحروف الكبيرة
@@ -60,7 +152,7 @@ public:
         return IsPrime::Prime;
     }
 
-    static  int FrequencyInNumber(int number, int DigitTarget) {
+    static int FrequencyInNumber(int number, int DigitTarget) {
         int reminder = 0;
         int frequency = 0;
         do {
@@ -766,6 +858,34 @@ public:
        return true;
    }
 
+    static std::string numberToWords(int num)
+   {
+       if (num < 0 || num > INT32_MAX)
+           return "";
+       else if (num == 0)
+           return "Zero";
+       std::string result = "";
+       int TempeNumber = num;
+       std::vector <std::string> vResults;
 
+       int counter = 0;
+       do
+       {
+           TempeNumber = num % 1000;
+           num = num / 1000;
+
+           if (TempeNumber != 0)
+               result = _ConvertNumberToWord(TempeNumber) + Scales.at(counter);
+
+           vResults.push_back(result);
+           result.clear();
+           counter++;
+       } while (num != 0);
+       for (int i = static_cast<int>(vResults.size() - 1); i >= 0; i--)
+       {
+           result += vResults.at(i);
+       }
+       return  result.substr(0, result.size() - 1);
+   }
 };
 
