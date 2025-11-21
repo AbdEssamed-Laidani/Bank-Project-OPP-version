@@ -3,6 +3,7 @@
 #include "clsScreen.h"
 #include "clsInputValidate.h"
 #include "clsClientListScreen.h"
+#include "clsAddClientScreen.h"
 class clsMainScreen : protected clsScreen
 {
 private:
@@ -31,7 +32,7 @@ private:
 	}
 	static void _AddNewClientScreen()
 	{
-		std::cout << "Add New Client Screen will be here..." << std::endl;
+		clsAddClientScreen::AddNew();
 	}
 	static void _DeleteClientScreen()
 	{
@@ -110,7 +111,7 @@ private:
 	public:
 		static void ShowMainScreen()
 		{
-			clsScreen::_DrawHeaderScreen("Main Menu", "Hello sir:");
+			clsScreen::_DrawHeaderScreen("\t       Main Menu");
 			std::cout << "\t\t\t\t\t======================================" << std::endl;
 			std::cout << "\t\t\t\t\t        Welcome to Bank System       " << std::endl;
 			std::cout << "\t\t\t\t\t======================================" << std::endl;

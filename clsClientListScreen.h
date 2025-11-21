@@ -19,7 +19,8 @@ public:
 	static void ShowClientList()
 	{
 		std::vector <clsBankClient> vClient = clsBankClient::GetClientsList();
-		clsScreen::_DrawHeaderScreen("Client List", "(" + std::to_string((int)vClient.size()) + ") Client(s).");
+		std::string title = "\t     Client List", SubTitle = "\t   (" + std::to_string((int)vClient.size()) + ") Client(s).";
+		clsScreen::_DrawHeaderScreen(title, SubTitle);
 		std::cout << "\t-------------------------------------------------------------------------------------------------------------------------------" << std::endl;
 		std::cout << "\t|" << std::left << std::setw(15) << " Account Number" << std::right << " |" << std::left << std::setw(25) << " Client Name" << std::right << " |" << std::left << std::setw(15) << " Phone" << std::right << " |" << std::left << std::setw(30) << " Email" << std::right << " |" << std::left << std::setw(15) << " Pin code" << std::right << " |" << std::left << std::setw(15) << " Balance" << std::right << "|" << std::endl;
 		std::cout << "\t-------------------------------------------------------------------------------------------------------------------------------" << std::endl;

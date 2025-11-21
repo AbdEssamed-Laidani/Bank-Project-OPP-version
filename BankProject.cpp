@@ -2,6 +2,7 @@
 #include "clsBankClient.h"
 #include "clsInputValidate.h"
 #include "clsUtil.h"
+#include "clsMainScreen.h"
 using namespace std;
 
 void ReadClientInfo(clsBankClient &Client)
@@ -130,7 +131,6 @@ void ShowTotalBalances()
 
 int main()
 {
-	ShowTotalBalances();
-	
+	clsMainScreen::ShowMainScreen();
 	return 0;
 }
