@@ -1,0 +1,66 @@
+#pragma once
+#include <iostream>
+#include <string>
+#include "clsBankClient.h"
+#include "clsInputValidate.h"
+#include "clsScreen.h"
+class clsUpdateClientScreen : clsScreen
+{
+private:
+	static void _PrintClient(clsBankClient& Client)
+	{
+		std::cout << "Client Card:\n";
+		std::cout << "-------------------------------\n";
+		std::cout << "First Name: " << Client.GetFirstName() << std::endl;
+		std::cout << "Last Name: " << Client.GetLastName() << std::endl;
+		std::cout << "Full Name: " << Client.GetFullName() << std::endl;
+		std::cout << "Account Number: " << Client.GetAccountNumber() << std::endl;
+		std::cout << "Password: " << Client.GetPinCode() << std::endl;
+		std::cout << "E-mail: " << Client.GetEmail() << std::endl;
+		std::cout << "Phone: " << Client.GetPhone() << std::endl;
+		std::cout << "Balance: " << Client.GetBalance() << std::endl;
+		std::cout << "-------------------------------\n";
+	}
+	static void ReadClientInfo(clsBankClient& Client)
+	{
+
+		Client.SetFirstName(clsInputValidate::ReadString("Enter your first name: "));
+		Client.SetLastName(clsInputValidate::ReadString("Enter your last name: "));
+		Client.SetEmail(clsInputValidate::ReadString("Enter your email: "));
+		Client.SetPhone(clsInputValidate::ReadString("Enter your phone number: "));
+		Client.SetPinCode(clsInputValidate::ReadString("Enter your pincode: "));
+		Client.SetBalance(clsInputValidate::ReadPositiveDoubleNumber("Enter your balance: "));
+
+	}
+	static void _UpdateClient()
+	{
+		clsScreen::_DrawHeaderScreen("\t   Update Client Screen");
+		std::string AccountNumber = clsInputValidate::ReadString("Enter you account number: ");
+		while (!clsBankClient::IsClientExist(AccountNumber))
+		{
+			AccountNumber = clsInputValidate::ReadString("Account with number[" + AccountNumber + "] doesn't exist, chose another one: ");
+		}
+		system("cls");
+		clsBankClient Client1 = clsBankClient::Find(AccountNumber);
+		_PrintClient(Client1);
+		ReadClientInfo(Client1);
+		clsBankClient::enSaveResult SaveResult = Client1.save();
+		switch (SaveResult)
+		{
+		case clsBankClient::enSaveResult::svFailedEmpty:
+			std::cout << "\n\nsave falied empty object :-(\n\n";
+			break;
+		case clsBankClient::enSaveResult::svSucceded:
+			std::cout << "\n\nsave succeded :-)\n\n";
+		}
+		_PrintClient(Client1);
+	}
+public:
+
+	static void ShowUpdateClientScreen()
+	{
+		_UpdateClient();
+	}
+
+};
+

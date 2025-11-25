@@ -4,6 +4,8 @@
 #include "clsInputValidate.h"
 #include "clsClientListScreen.h"
 #include "clsAddClientScreen.h"
+#include "clsDeleteClientScreen.h"
+#include "clsUpdateClientScreen.h"
 class clsMainScreen : protected clsScreen
 {
 private:
@@ -36,11 +38,11 @@ private:
 	}
 	static void _DeleteClientScreen()
 	{
-		std::cout << "Delete Client Screen will be here..." << std::endl;
+		clsDeleteClientScreen::ShowDeleteClientScreen();
 	}
 	static void _UpdateClientInfoScreen()
 	{
-		std::cout << "Update Client Info Screen will be here..." << std::endl;
+		clsUpdateClientScreen::ShowUpdateClientScreen();
 	}
 	static void _FindClientScreen()
 	{
