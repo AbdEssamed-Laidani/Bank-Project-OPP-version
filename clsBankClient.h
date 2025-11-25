@@ -124,20 +124,7 @@ public:
 	{
 		return (_Mode == enMode::EmptyMode);
 	}
-	void print()
-	{
-		std::cout << "Client Card:\n";
-		std::cout << "-------------------------------\n";
-		std::cout << "First Name: " << GetFirstName() << std::endl;
-		std::cout << "Last Name: " << GetLastName() << std::endl;
-		std::cout << "Full Name: " << GetFullName() << std::endl;
-		std::cout << "Account Number: " << _AccountNumber << std::endl;
-		std::cout << "Password: " << GetPinCode() << std::endl;
-		std::cout << "E-mail: " << GetEmail() << std::endl;
-		std::cout << "Phone: " << GetPhone() << std::endl;
-		std::cout << "Balance: " << _Balance << std::endl;
-		std::cout << "-------------------------------\n";
-	}
+
 	static clsBankClient Find(const std::string &AccountNumber)
 	{
 		std::vector <clsBankClient> vClient;

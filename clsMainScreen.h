@@ -32,7 +32,7 @@ private:
 	}
 	static void _AddNewClientScreen()
 	{
-		clsAddClientScreen::AddNew();
+		clsAddClientScreen::ShowAddClientScreen();
 	}
 	static void _DeleteClientScreen()
 	{

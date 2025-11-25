@@ -19,9 +19,22 @@ private:
 
 	}
 
-public:
+	static void _PrintClient(clsBankClient &Client)
+	{
+		std::cout << "Client Card:\n";
+		std::cout << "-------------------------------\n";
+		std::cout << "First Name: " << Client.GetFirstName() << std::endl;
+		std::cout << "Last Name: " << Client.GetLastName() << std::endl;
+		std::cout << "Full Name: " << Client.GetFullName() << std::endl;
+		std::cout << "Account Number: " << Client.GetAccountNumber() << std::endl;
+		std::cout << "Password: " << Client.GetPinCode() << std::endl;
+		std::cout << "E-mail: " << Client.GetEmail() << std::endl;
+		std::cout << "Phone: " << Client.GetPhone() << std::endl;
+		std::cout << "Balance: " << Client.GetBalance() << std::endl;
+		std::cout << "-------------------------------\n";
+	}
 
-	static void AddNew()
+	static void _AddNew()
 	{
 		clsScreen::_DrawHeaderScreen("\t     Add New Client");
 		std::string AccountNumber = clsInputValidate::ReadString("\tEnter account number: ");
@@ -42,10 +55,17 @@ public:
 			break;
 		case clsBankClient::enSaveResult::svSucceded:
 			std::cout << "\n\nsave succeded :-)\n\n";
+			_PrintClient(NewClient);
 			break;
 		}
-		NewClient.print();
+		
 	}
+public:
+	static void ShowAddClientScreen()
+	{
+		_AddNew();
+	}	
+	
 
 };
 
