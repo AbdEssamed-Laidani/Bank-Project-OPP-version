@@ -7,6 +7,7 @@
 #include "clsDeleteClientScreen.h"
 #include "clsUpdateClientScreen.h"
 #include "clsFindClientScreen.h"
+#include "clsTransactionScreen.h"
 class clsMainScreen : protected clsScreen
 {
 private:
@@ -28,6 +29,7 @@ private:
 	{
 		std::cout << "Press any key to go back to main screen...";
 		system("pause>0");
+		ShowMainScreen();
 	}
 	static void _ShowClientListScreen()
 	{
@@ -51,7 +53,7 @@ private:
 	}
 	static void _TransactionScreen()
 	{
-		std::cout << "Transaction Screen will be here..." << std::endl;
+		clsTransactionScreen::ShowTransactionScreen();
 	}
 	static void _ManageUsersScreen()
 	{
@@ -114,6 +116,7 @@ private:
 	public:
 		static void ShowMainScreen()
 		{
+			_ClearScreen();
 			clsScreen::_DrawHeaderScreen("\t       Main Menu");
 			std::cout << "\t\t\t\t\t======================================" << std::endl;
 			std::cout << "\t\t\t\t\t        Welcome to Bank System       " << std::endl;

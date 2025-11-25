@@ -233,6 +233,11 @@ public:
 		}
 		return total;
 	}
+    void DepositAmount(double Amount)
+	{
+		_Balance += Amount;
+		save();
+	}
 
 	
 };
