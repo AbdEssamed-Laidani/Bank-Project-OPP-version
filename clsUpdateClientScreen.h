@@ -38,22 +38,34 @@ private:
 		std::string AccountNumber = clsInputValidate::ReadString("Enter you account number: ");
 		while (!clsBankClient::IsClientExist(AccountNumber))
 		{
-			AccountNumber = clsInputValidate::ReadString("Account with number[" + AccountNumber + "] doesn't exist, chose another one: ");
+			clsScreen::_ClearScreen();
+			clsScreen::_DrawHeaderScreen("\t   Update Client Screen");
+			if (toupper(clsInputValidate::ReadLetter("Account number not exist, search again? [Y/N]: ")) == 'Y')
+				AccountNumber = clsInputValidate::ReadString("r-enter account number: ");
+			else
+				return;
 		}
-		system("cls");
+		clsScreen::_ClearScreen();
+		clsScreen::_DrawHeaderScreen("\t   Update Client Screen");
+
 		clsBankClient Client1 = clsBankClient::Find(AccountNumber);
 		_PrintClient(Client1);
-		ReadClientInfo(Client1);
-		clsBankClient::enSaveResult SaveResult = Client1.save();
-		switch (SaveResult)
+		if (toupper(clsInputValidate::ReadLetter("Are you sure you want to update client with number [" + AccountNumber + "]? [Y/N]: ")) == 'Y')
 		{
-		case clsBankClient::enSaveResult::svFailedEmpty:
-			std::cout << "\n\nsave falied empty object :-(\n\n";
-			break;
-		case clsBankClient::enSaveResult::svSucceded:
-			std::cout << "\n\nsave succeded :-)\n\n";
+			ReadClientInfo(Client1);
+			clsBankClient::enSaveResult SaveResult = Client1.save();
+			switch (SaveResult)
+			{
+			case clsBankClient::enSaveResult::svFailedEmpty:
+				std::cout << "\n\nsave falied empty object :-(\n\n";
+				break;
+			case clsBankClient::enSaveResult::svSucceded:
+				std::cout << "\n\nsave succeded :-)\n\n";
+			}
+			_PrintClient(Client1);
 		}
-		_PrintClient(Client1);
+		else
+			return;
 	}
 public:
 

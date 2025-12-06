@@ -4,6 +4,7 @@
 #include "clsBankClient.h"
 #include "clsInputValidate.h"
 #include "clsScreen.h"
+#include <cctype>
 class clsFindClientScreen :protected clsScreen
 {
 	static void _PrintClient(clsBankClient& Client)
@@ -26,7 +27,12 @@ class clsFindClientScreen :protected clsScreen
 		std::string AccountNumber = clsInputValidate::ReadString("Enter you account number: ");
 		while (!clsBankClient::IsClientExist(AccountNumber))
 		{
-			AccountNumber = clsInputValidate::ReadString("Account number not exist, r-enter account number: ");
+			clsScreen::_ClearScreen();
+			clsScreen::_DrawHeaderScreen("\t   Find Client");
+			if (toupper(clsInputValidate::ReadLetter("Account number not exist, search again? [Y/N]: ")) == 'Y')
+				AccountNumber = clsInputValidate::ReadString("r-enter account number: ");
+			else
+				return;
 		}
 		clsBankClient Client = clsBankClient::Find(AccountNumber);
 		if (Client.isEmpty())

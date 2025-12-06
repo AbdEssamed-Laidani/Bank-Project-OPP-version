@@ -13,6 +13,10 @@ protected:
 		std::cout << "\t\t\t\t\t" << SubTitle << std::endl;
 		std::cout << "\t\t\t\t\t--------------------------------------" << std::endl << std::endl;
 	}
+	static void _ClearScreen()
+	{
+		system("cls");
+	}
 
 
 };

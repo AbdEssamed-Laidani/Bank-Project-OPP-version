@@ -226,6 +226,7 @@ public:
 	static double GetTotalBalances()
 	{
 		std::vector <clsBankClient> vClient = _LoadDataFromFile();
+
 		double total = 0;
 		for (clsBankClient& i : vClient)
 		{
@@ -238,7 +239,10 @@ public:
 		_Balance += Amount;
 		save();
 	}
-
+	void WithDrawAmount(double Amount)
+	{
+		DepositAmount(-1 * Amount);
+	}
 	
 };
 
