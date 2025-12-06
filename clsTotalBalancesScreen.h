@@ -17,7 +17,7 @@ private:
 		std::vector <clsBankClient> vClient = clsBankClient::GetClientsList();
 		if (vClient.empty())
 		{
-			cout << "\nNot client availabe in the system!\n";
+			std::cout << "\nNot client availabe in the system!\n";
 		}
 		else
 		{
