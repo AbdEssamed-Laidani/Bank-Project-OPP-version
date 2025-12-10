@@ -8,6 +8,7 @@
 #include "clsUpdateClientScreen.h"
 #include "clsFindClientScreen.h"
 #include "clsTransactionScreen.h"
+#include "clsUserManageScreen.h"
 class clsMainScreen : protected clsScreen
 {
 private:
@@ -57,7 +58,7 @@ private:
 	}
 	static void _ManageUsersScreen()
 	{
-		std::cout << "Manage Users Screen will be here..." << std::endl;
+		clsUserManageScreen::ShowManageUserScreen();
 	}
 	static void _LogoutScreen()
 	{
