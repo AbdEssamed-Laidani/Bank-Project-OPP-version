@@ -25,7 +25,7 @@ private:
 		return clsUser(enMode::UpdateMode, vUser.at(0), vUser.at(1), vUser.at(2), vUser.at(3),
 			vUser.at(4), vUser.at(5), stoi(vUser.at(6)));
 	}
-    std::string _ConvertUserObjectToLine(clsUser& User,const std::string &Delimiter)
+    static std::string _ConvertUserObjectToLine(clsUser& User,const std::string &Delimiter)
 	{
 		std::string Record;
 		Record += User.GetFirstName() + Delimiter;
@@ -44,7 +44,6 @@ private:
 		MyFile.open("Users.txt", std::ios::in);
 		if (MyFile.is_open())
 		{
-
 			std::string Line;
 			while (std::getline(MyFile, Line))
 			{
@@ -56,12 +55,13 @@ private:
 		{
 			std::cout << "couldn't open the file!\n";
 		}
+		return vUsers;
 	}
 	static clsUser _GetEmptyObject()
 	{
 		return clsUser(enMode::EmptyMode, "", "", "", "", "", "", 0);
 	}
-	void _SaveUsersDataToFile(std::vector <clsUser> vUsers)
+	void _SaveUsersDataToFile(std::vector <clsUser> &vUsers)
 	{
 		std::fstream MyFile;
 		MyFile.open("Users.txt", std::ios::out);
@@ -69,7 +69,7 @@ private:
 		{
 			for (clsUser& U : vUsers)
 			{
-				if(!_MarkedForDeleted)
+				if(!U.MarkedForDeleted())
 				MyFile << _ConvertUserObjectToLine(U, " #//# ") << std::endl;
 			}
 			MyFile.close();
@@ -81,16 +81,16 @@ private:
 	}
 	void _Update()
 	{
-		std::vector <clsUser> vClient = _LoadUserDataFromFile();
-		for (clsUser& C : vClient)
+		std::vector <clsUser> vUsers = _LoadUserDataFromFile();
+		for (clsUser& U : vUsers)
 		{
-			if (GetUsername() == C.GetUsername())
+			if (GetUsername() == U.GetUsername())
 			{
-				C = *this;
+				U = *this;
 				break;
 			}
 		}
-		_SaveUsersDataToFile(vClient);
+		_SaveUsersDataToFile(vUsers);
 	}
 	void _AddUserToFile(const std::string &UserDataLine)
 	{
@@ -113,14 +113,22 @@ private:
 public:
 
 	clsUser(enMode Mode, const std::string& FirstName, const std::string& LastName,
-		const std::string& Email, const std::string& Phone, std::string UserName,
-		std::string Password, const int& Permisstions)
+		const std::string& Email, const std::string& Phone,const std::string &UserName,
+		const std::string &Password, int Permisstions)
 		:clsPerson(FirstName, LastName, Email, Phone)
 	{
 		_Mode = Mode;
 		_UserName = UserName;
 		_Password = Password;
 		_Permisstions = Permisstions;
+	}
+	bool MarkedForDeleted()
+	{
+		return _MarkedForDeleted;
+	}
+	void SetMakedForDeleted(bool Delete)
+	{
+		_MarkedForDeleted = Delete;
 	}
 	std::string GetUsername()
 	{
@@ -157,7 +165,7 @@ public:
 		{
 			if (U.GetUsername() == UserName)
 			{
-				_MarkedForDeleted = true;
+				U.SetMakedForDeleted(true);
 				break;
 			}
 		}
@@ -167,21 +175,47 @@ public:
 	}
 	static clsUser Find(std::string UserName)
 	{
-		std::vector <clsUser> vUsers = _LoadUserDataFromFile();
-		for (clsUser& U : vUsers)
+		std::fstream MyFile("Users.txt", std::ios::in);
+
+		if (MyFile.is_open())
 		{
-			if (UserName == U.GetUsername())
-				return U;
+			std::string Line;
+			while (std::getline(MyFile, Line))
+			{
+				clsUser user = _ConvertLineToUserObject(Line, " #//# ");
+				if (user.GetUsername() == UserName)
+				{
+					MyFile.close();
+					return user;
+				}
+			}
+		}
+		else
+		{
+			std::cout << "couldn't open the file!\n";
 		}
 		return _GetEmptyObject();
 	}
 	static clsUser Find(const std::string& UserName,const std::string& Password)
 	{
-		std::vector <clsUser> vUsers = _LoadUserDataFromFile();
-		for (clsUser& U : vUsers)
+		std::fstream MyFile("Users.txt", std::ios::in);
+
+		if (MyFile.is_open())
 		{
-			if (UserName == U.GetUsername() && Password == U.GetPassword())
-				return U;
+			std::string Line;
+			while (std::getline(MyFile, Line))
+			{
+				clsUser user = _ConvertLineToUserObject(Line, " #//# ");
+				if (user.GetUsername() == UserName && user.GetPassword() == Password)
+				{
+					MyFile.close();
+					return user;
+				}
+			}
+		}
+		else
+		{
+			std::cout << "couldn't open the file!\n";
 		}
 		return _GetEmptyObject();
 	}
@@ -193,6 +227,10 @@ public:
 	static std::vector <clsUser> GetUsersList()
 	{
 		return _LoadUserDataFromFile();
+	}
+	static clsUser GetAddNewUserObject(const std::string &UserName)
+	{
+		return clsUser(enMode::AddNewMode, "", "", "", "", UserName, "", 0);
 	}
 	enum enSaveResult { svSucceded = 1, svFailedEmpty, svFailedExist };
     enSaveResult save()
@@ -212,7 +250,7 @@ public:
 				return enSaveResult::svFailedExist;
 			else
 			{
-				_AddNewUser;
+				_AddNewUser();
 				_Mode = UpdateMode;
 				return enSaveResult::svSucceded;
 			}
@@ -221,5 +259,6 @@ public:
 			break;
 
 		}
+		return enSaveResult::svSucceded;
 	}
 };
