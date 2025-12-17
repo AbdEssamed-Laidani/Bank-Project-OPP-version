@@ -5,6 +5,7 @@
 #include "clsBankClient.h"
 #include "clsScreen.h"
 #include <iomanip>
+#include "clsUsersListScreen.h"
 class clsUserManageScreen : protected clsScreen
 {
 private:
@@ -23,7 +24,7 @@ private:
     }
     static void _ShowUsersListScreen()
     {
-        std::cout << "Users list screen will be here...\n";
+        clsUsersListScreen::ShowUsersListScreen();
     }
     static void _ShowFindUserScreen()
     {

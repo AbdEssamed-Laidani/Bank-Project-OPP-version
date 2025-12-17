@@ -28,7 +28,7 @@ public:
 	{
 		_FirstName = FirstName;
 	}
-	std::string GetFirstName()
+     std::string GetFirstName()
 	{
 		return _FirstName;
 	}
@@ -55,6 +55,10 @@ public:
 	std::string GetPhone()
 	{
 		return _Phone;
+	}
+	std::string GetFullName()
+	{
+		return GetFirstName() + " " + GetLastName();
 	}
 };
 

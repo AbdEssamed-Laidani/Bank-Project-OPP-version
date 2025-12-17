@@ -22,7 +22,7 @@ private:
 	static void _ShowList()
 	{
 		std::vector <clsUser> vUsers = clsUser::GetUsersList();
-		std::string title = "\t     Users List", SubTitle = "\t   (" + std::to_string((int)vUsers.size()) + ") User(s).";
+		std::string title = "\t     Users List", SubTitle = "\t   (" + std::to_string((int)vUsers.size()) + ") User (s).";
 		clsScreen::_DrawHeaderScreen(title, SubTitle);
 		std::cout << "\t-----------------------------------------------------------------------------------------------------------------" << std::endl;
 		std::cout << "\t|" << std::left << std::setw(10) << " UserName"

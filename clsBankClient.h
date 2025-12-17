@@ -133,9 +133,9 @@ public:
 		while (getline(MyFile, Line))
 		{
 			clsBankClient Client = _ConvertLineToClientObject(Line);
-			
 			if (Client.GetAccountNumber() == AccountNumber)
 			{
+				MyFile.close();
 				return Client;
 			}
 			vClient.push_back(Client);

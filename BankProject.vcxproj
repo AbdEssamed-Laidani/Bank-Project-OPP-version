@@ -146,6 +146,7 @@
     <ClInclude Include="clsUpdateClientScreen.h" />
     <ClInclude Include="clsUser.h" />
     <ClInclude Include="clsUserManageScreen.h" />
+    <ClInclude Include="clsUsersListScreen.h" />
     <ClInclude Include="clsWithdrawScreen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
