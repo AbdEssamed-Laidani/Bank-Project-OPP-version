@@ -2,10 +2,10 @@
 #include <iostream>
 #include <string>
 #include "clsInputValidate.h"
-#include "clsBankClient.h"
 #include "clsScreen.h"
 #include <iomanip>
 #include "clsUsersListScreen.h"
+#include "clsAddNewUser.h"
 class clsUserManageScreen : protected clsScreen
 {
 private:
@@ -40,7 +40,7 @@ private:
     }
     static void _ShowAddUserScreen()
     {
-        std::cout << "Add user screen will be here...\n";
+        clsAddNewUser::ShowAddNewUserScreen();
     }
     
     static void _PerformManageUsersOption(enManageUserMenu Option)
