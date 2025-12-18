@@ -15,7 +15,7 @@ private:
 			<< std::right << "| " << std::left << std::setw(15) << User.GetPhone()
 			<< std::right << "| " << std::left << std::setw(25) << User.GetEmail()
 			<< std::right << "| " << std::left << std::setw(10) << User.GetPassword()
-			<< std::right << "| " << std::left << std::setw(15) << User.GetPermisstion()
+			<< std::right << "| " << std::left << std::setw(15) << User.GetPermistions()
 			<< std::right << "| " << std::endl;
 	}
 

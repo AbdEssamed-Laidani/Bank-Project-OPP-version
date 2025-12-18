@@ -34,7 +34,7 @@ private:
 		Record += User.GetPhone() + Delimiter;
 		Record += User.GetUsername() + Delimiter;
 		Record += User.GetPassword() + Delimiter;
-		Record += std::to_string(User.GetPermisstion());
+		Record += std::to_string(User.GetPermistions());
 		return Record;
 	}
 	static std::vector <clsUser> _LoadUserDataFromFile()
@@ -112,6 +112,13 @@ private:
 	}
 public:
 
+	enum enPermistions {
+		All = -1, pList = 1, pAdd = 2,
+		pDeleted = 4, pUpdate = 8, pFind = 16,
+		pTransactions = 32, pManage = 64
+	};
+
+
 	clsUser(enMode Mode, const std::string& FirstName, const std::string& LastName,
 		const std::string& Email, const std::string& Phone,const std::string &UserName,
 		const std::string &Password, int Permisstions)
@@ -146,7 +153,7 @@ public:
 	{
 		_Password = Password;
 	}
-	int GetPermisstion()
+	int GetPermistions()
 	{
 		return _Permisstions;
 	}

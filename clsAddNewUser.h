@@ -7,9 +7,11 @@
 #include "clsScreen.h"
 #include <cctype>
 #include "clsUser.h"
+#include <vector>
 class clsAddNewUser : protected clsScreen
 {
 private:
+
     static void _ReadUserInfo(clsUser& user)
     {
         
@@ -18,7 +20,7 @@ private:
         user.SetPassword(clsInputValidate::ReadString("Enter password: "));
         user.SetPhone(clsInputValidate::ReadString("Enter phone number: "));
         user.SetEmail(clsInputValidate::ReadString("Enter e-mail: "));
-        user.SetPermisstion(_ReadPermissions());
+        user.SetPermisstion(_ReadPermisions());
     }
     static void _PrintUser(clsUser& user)
     {
@@ -31,26 +33,31 @@ private:
         std::cout << "E-mail: " << user.GetEmail() << std::endl;
         std::cout << "Username: " << user.GetUsername() << std::endl;
         std::cout << "Password: " << user.GetPassword() << std::endl;
-        std::cout << "Pemissions: " << user.GetPermisstions() << std::endl;
+        std::cout << "Pemisions: " << user.GetPermistions() << std::endl;
         std::cout << "--------------------------------\n";
     }
-	static int _ReadPermissions()
+	static int _ReadPermisions()
 	{
-        std::string MenuItems[] ={"Show Client List","Add New Client",
-            "Delete Client","Update Client Info","Find Client","Transaction","Manage Users",
-        };
-        int Permissions[] = { 1,2,4,8,16,32,64 };
         int permistions = 0;
+
+        
         if (toupper(clsInputValidate::ReadLetter("Do you want to give all permissions? [Y/N]: ")) == 'Y')
-            return -1;
+            return clsUser::enPermistions::All;
         else
         {
-            for (short i = 0; i < 7; i++)
+            std::vector < std::string> vMenuItems = { "Show Client List","Add New Client",
+            "Delete Client","Update Client Info","Find Client","Transaction","Manage Users",
+            };
+            std::vector < clsUser::enPermistions > vPermisions = { clsUser::enPermistions::pList, clsUser::enPermistions::pAdd,
+                clsUser::enPermistions::pDeleted, clsUser::enPermistions::pUpdate, clsUser::enPermistions::pFind,
+                clsUser::enPermistions::pTransactions, clsUser::enPermistions::pManage };
+
+            for (short i = 0; i < (int)vMenuItems.size(); i++)
             {
                 if (toupper(clsInputValidate::ReadLetter("Do you want to give access to \"" +
-                    MenuItems[i] + "\" ? [Y / N] : ")) == 'Y')
+                    vMenuItems.at(i) + "\" ? [Y / N] : ")) == 'Y')
                 {
-                    permistions += Permissions[i];
+                    permistions |= vPermisions.at(i);
                 }
             }
         }
