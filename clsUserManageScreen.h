@@ -6,6 +6,9 @@
 #include <iomanip>
 #include "clsUsersListScreen.h"
 #include "clsAddNewUser.h"
+#include "clsDeleteUserScreen.h"
+#include "clsUpdateuserScreen.h"
+#include "clsFindUserScreen.h"
 class clsUserManageScreen : protected clsScreen
 {
 private:
@@ -28,15 +31,15 @@ private:
     }
     static void _ShowFindUserScreen()
     {
-        std::cout << "Find user screen will be here...\n";
+        clsFindUserScreen::ShowFindUserScreen();
     }
     static void _ShowDeleteUserScreen()
     {
-        std::cout << "Delete user screen will be here...\n";
+        clsDeleteUserScreen::ShowDeleteUserScreen();
     }
     static void _ShowUpdateUserScreen()
     {
-        std::cout << "Update user screen will be here...\n";
+        clsUpdateUserScreen::ShowUpdateUserScreen();
     }
     static void _ShowAddUserScreen()
     {
