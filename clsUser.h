@@ -165,12 +165,12 @@ public:
 	{
 		return _Mode == enMode::EmptyMode;
 	}
-	bool Delete(const std::string &UserName)
+	bool Delete()
 	{
 		std::vector <clsUser> vUsers = _LoadUserDataFromFile();
 		for (clsUser& U : vUsers)
 		{
-			if (U.GetUsername() == UserName)
+			if (U.GetUsername() == _UserName)
 			{
 				U.SetMakedForDeleted(true);
 				break;

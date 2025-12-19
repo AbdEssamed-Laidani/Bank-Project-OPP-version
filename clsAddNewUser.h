@@ -8,19 +8,21 @@
 #include <cctype>
 #include "clsUser.h"
 #include <vector>
-class clsAddNewUser : protected clsScreen
+#include "clsPermistions.h"
+
+class clsAddNewUser : protected clsScreen 
 {
 private:
 
     static void _ReadUserInfo(clsUser& user)
     {
-        
+
         user.SetFirstName(clsInputValidate::ReadString("Enter first name: "));
         user.SetLastName(clsInputValidate::ReadString("Enter last name: "));
         user.SetPassword(clsInputValidate::ReadString("Enter password: "));
         user.SetPhone(clsInputValidate::ReadString("Enter phone number: "));
         user.SetEmail(clsInputValidate::ReadString("Enter e-mail: "));
-        user.SetPermisstion(_ReadPermisions());
+        user.SetPermisstion(clsPermistions::_ReadPermisions());
     }
     static void _PrintUser(clsUser& user)
     {
@@ -36,33 +38,7 @@ private:
         std::cout << "Pemisions: " << user.GetPermistions() << std::endl;
         std::cout << "--------------------------------\n";
     }
-	static int _ReadPermisions()
-	{
-        int permistions = 0;
 
-        
-        if (toupper(clsInputValidate::ReadLetter("Do you want to give all permissions? [Y/N]: ")) == 'Y')
-            return clsUser::enPermistions::All;
-        else
-        {
-            std::vector < std::string> vMenuItems = { "Show Client List","Add New Client",
-            "Delete Client","Update Client Info","Find Client","Transaction","Manage Users",
-            };
-            std::vector < clsUser::enPermistions > vPermisions = { clsUser::enPermistions::pList, clsUser::enPermistions::pAdd,
-                clsUser::enPermistions::pDeleted, clsUser::enPermistions::pUpdate, clsUser::enPermistions::pFind,
-                clsUser::enPermistions::pTransactions, clsUser::enPermistions::pManage };
-
-            for (short i = 0; i < (int)vMenuItems.size(); i++)
-            {
-                if (toupper(clsInputValidate::ReadLetter("Do you want to give access to \"" +
-                    vMenuItems.at(i) + "\" ? [Y / N] : ")) == 'Y')
-                {
-                    permistions |= vPermisions.at(i);
-                }
-            }
-        }
-        return permistions;
-	}
     static void _AddNewUserScreen()
     {
         clsScreen::_ClearScreen();

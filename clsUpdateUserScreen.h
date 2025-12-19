@@ -37,7 +37,6 @@ private:
         user.SetEmail(clsInputValidate::ReadString("Enter e-mail: "));
         user.SetPermisstion(clsPermistions::_ReadPermisions());
         std::cout << "\n----------------------------\n";
-
     }
     static void _Update()
     {
@@ -76,13 +75,9 @@ private:
     }
 
 public:
-
 	static void ShowUpdateUserScreen()
 	{
         _Update();
 	}
-
-
-
 };
 
