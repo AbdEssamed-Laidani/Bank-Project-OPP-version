@@ -36,6 +36,9 @@ private:
 
 	static void _AddNew()
 	{
+		if (!clsScreen::CheckPermitionRight(clsUser::enPermistions::pAdd))
+			return;
+
 		clsScreen::_DrawHeaderScreen("\t     Add New Client");
 		std::string AccountNumber = clsInputValidate::ReadString("\tEnter account number: ");
 		while (clsBankClient::IsClientExist(AccountNumber))

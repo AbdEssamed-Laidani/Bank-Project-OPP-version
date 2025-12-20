@@ -23,7 +23,7 @@ public:
             "Delete Client","Update Client Info","Find Client","Transaction","Manage Users",
             };
             std::vector < clsUser::enPermistions > vPermisions = { clsUser::enPermistions::pList, clsUser::enPermistions::pAdd,
-                clsUser::enPermistions::pDeleted, clsUser::enPermistions::pUpdate, clsUser::enPermistions::pFind,
+                clsUser::enPermistions::pDelete, clsUser::enPermistions::pUpdate, clsUser::enPermistions::pFind,
                 clsUser::enPermistions::pTransactions, clsUser::enPermistions::pManage };
 
             for (short i = 0; i < (int)vMenuItems.size(); i++)

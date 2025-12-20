@@ -9,6 +9,7 @@
 #include "clsDeleteUserScreen.h"
 #include "clsUpdateuserScreen.h"
 #include "clsFindUserScreen.h"
+#include "clsUser.h"
 class clsUserManageScreen : protected clsScreen
 {
 private:
@@ -87,6 +88,9 @@ public:
 
 	static void ShowManageUserScreen()
 	{
+        if (!clsScreen::CheckPermitionRight(clsUser::enPermistions::pList))
+            return;
+
 		std::string Title = "\t     Manage Users";
 		clsScreen::_ClearScreen();
 		clsScreen::_DrawHeaderScreen(Title);

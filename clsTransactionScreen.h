@@ -5,6 +5,7 @@
 #include "clsDepositScreen.h"
 #include "clsWithdrawScreen.h"
 #include "clstotalBalancesScreen.h"
+#include "clsUser.h"
 class clsTransactionScreen : protected clsScreen
 {
 
@@ -67,6 +68,9 @@ public:
 
 	static void ShowTransactionScreen()
 	{
+		if (!clsScreen::CheckPermitionRight(clsUser::enPermistions::pList))
+			return;
+
 		_ClearScreen();
 		clsScreen::_DrawHeaderScreen("\t   Transaction menu");
 		std::cout << "\t\t\t\t\t======================================" << std::endl;

@@ -34,6 +34,9 @@ private:
 	}
 	static void _UpdateClient()
 	{
+		if (!clsScreen::CheckPermitionRight(clsUser::enPermistions::pUpdate))
+			return;
+
 		clsScreen::_DrawHeaderScreen("\t   Update Client Screen");
 		std::string AccountNumber = clsInputValidate::ReadString("Enter you account number: ");
 		while (!clsBankClient::IsClientExist(AccountNumber))

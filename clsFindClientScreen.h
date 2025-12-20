@@ -23,6 +23,9 @@ class clsFindClientScreen :protected clsScreen
 	}
 	static void _FindClient()
 	{
+		if (!clsScreen::CheckPermitionRight(clsUser::enPermistions::pFind))
+			return;
+
 		clsScreen::_DrawHeaderScreen("\t   Find Client");
 		std::string AccountNumber = clsInputValidate::ReadString("Enter you account number: ");
 		while (!clsBankClient::IsClientExist(AccountNumber))

@@ -24,6 +24,9 @@ private:
 	}
 	static void _DeleteClient()
 	{
+		if (!clsScreen::CheckPermitionRight(clsUser::enPermistions::pDelete))
+			return;
+
 		clsScreen::_DrawHeaderScreen("\t   Delete Client Screen");
 		std::string AccountNumber = clsInputValidate::ReadString("Enter account number: ");
 		while (!clsBankClient::IsClientExist(AccountNumber))

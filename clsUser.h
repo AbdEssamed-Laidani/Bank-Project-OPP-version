@@ -114,7 +114,7 @@ public:
 
 	enum enPermistions {
 		All = -1, pList = 1, pAdd = 2,
-		pDeleted = 4, pUpdate = 8, pFind = 16,
+		pDelete = 4, pUpdate = 8, pFind = 16,
 		pTransactions = 32, pManage = 64
 	};
 
@@ -267,5 +267,13 @@ public:
 
 		}
 		return enSaveResult::svSucceded;
+	}
+
+	bool CheckAccessPermistion(enPermistions Permistion)
+	{
+		if (((this->_Permisstions & Permistion) == Permistion) || (Permistion == enPermistions::All))
+			return true;
+		else
+			return false;
 	}
 };

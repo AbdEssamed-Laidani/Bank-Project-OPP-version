@@ -18,6 +18,9 @@ public:
 
 	static void ShowClientList()
 	{
+		if(!clsScreen::CheckPermitionRight(clsUser::enPermistions::pList))
+			return;
+
 		std::vector <clsBankClient> vClient = clsBankClient::GetClientsList();
 		std::string title = "\t     Client List", SubTitle = "\t   (" + std::to_string((int)vClient.size()) + ") Client(s).";
 		clsScreen::_DrawHeaderScreen(title, SubTitle);

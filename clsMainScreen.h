@@ -61,9 +61,9 @@ private:
 	{
 		clsUserManageScreen::ShowManageUserScreen();
 	}
-	static void _LogoutScreen()
+	static void _Logout()
 	{
-		std::cout << "Logout Screen will be here..." << std::endl;
+		CurrentUser = clsUser::Find("", "");
 	}
 	static void _PerformMainMenuOption(enMainMenuOptions MainMenuOption)
 	{
@@ -106,6 +106,8 @@ private:
 			_GoBackToMainScreen();
 			break;
 		case enLogout:
+			_ClearScreen();
+			_Logout();
 			break;
 		default:
 			break;
