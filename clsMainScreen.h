@@ -9,6 +9,7 @@
 #include "clsFindClientScreen.h"
 #include "clsTransactionScreen.h"
 #include "clsUserManageScreen.h"
+#include "Global.h"
 class clsMainScreen : protected clsScreen
 {
 private:
@@ -119,6 +120,7 @@ private:
 		{
 			_ClearScreen();
 			clsScreen::_DrawHeaderScreen("\t       Main Menu");
+			std::cout << "\t\t\t\t\tHello, " << CurrentUser.GetFullName() << std::endl << std::endl;
 			std::cout << "\t\t\t\t\t======================================" << std::endl;
 			std::cout << "\t\t\t\t\t        Welcome to Bank System       " << std::endl;
 			std::cout << "\t\t\t\t\t======================================" << std::endl;

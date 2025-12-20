@@ -4,13 +4,13 @@
 #include "clsUtil.h"
 #include "clsMainScreen.h"
 #include "clsUser.h"
+#include "clsLoginScreen.h"
 using namespace std;
 
 
 int main()
 {
-	clsMainScreen::ShowMainScreen();
- 
+	clsLoginScreen::ShowLoginScreen();
 	
 	return 0;
 }

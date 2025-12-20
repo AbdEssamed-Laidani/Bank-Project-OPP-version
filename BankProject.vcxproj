@@ -141,6 +141,7 @@
     <ClInclude Include="clsDepositScreen.h" />
     <ClInclude Include="clsFindClientScreen.h" />
     <ClInclude Include="clsFindUserScreen.h" />
+    <ClInclude Include="clsLoginScreen.h" />
     <ClInclude Include="clsMainScreen.h" />
     <ClInclude Include="clsPermistions.h" />
     <ClInclude Include="clsPerson.h" />
@@ -153,6 +154,7 @@
     <ClInclude Include="clsUserManageScreen.h" />
     <ClInclude Include="clsUsersListScreen.h" />
     <ClInclude Include="clsWithdrawScreen.h" />
+    <ClInclude Include="Global.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
