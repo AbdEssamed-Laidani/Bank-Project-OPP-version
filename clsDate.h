@@ -19,6 +19,8 @@ private:
         _Month = stoi(vDate.at(1));
         _Year = stoi(vDate.at(2));
     }
+   
+    
 
     void DayOfYearToDate(short DayOrderInYear, short Year)
     {
@@ -98,26 +100,45 @@ public:
         _Year = Year;
     }
 
+    static std::string DateToString(clsDate& Date)
+    {
+        std::string date;
+        date += std::to_string(Date.GetYear()) + "/" + std::to_string(Date.GetMonth()) + "/" + std::to_string(Date.GetDay());
+        return date;
+    }
+    static std::string GetSystemDateString()
+    {
+        time_t currentTime = time(0);
+        tm* strTime = localtime(&currentTime);
+        unsigned Year = 0, Month = 0, Day = 0, Hour = 0, Min = 0, Sec = 0;
 
+        Year = strTime->tm_year + 1900;
+        Month = strTime->tm_mon + 1;
+        Day = strTime->tm_mday;
+        Hour = strTime->tm_hour;
+        return std::to_string(Year) + "/" + std::to_string(Month) + "/" + std::to_string(Day) + " - "
+            + std::to_string(Hour) + ":" + std::to_string(strTime->tm_min) + ":" + std::to_string(strTime->tm_sec);
+    }
 
-  static bool isLeapYear(short& Year)
+    static bool isLeapYear(short& Year)
     {
         return (Year % 400 == 0 || (Year % 4 == 0 && Year % 100 != 0));
     }
-  bool isLeapYear()
-  {
-      return isLeapYear(_Year);
-  }
+    bool isLeapYear()
+    {
+        return isLeapYear(_Year);
+    }
 
-   void GetSystemDate()
-  {
+    void GetSystemDate()
+    {
 
-      time_t currentTime = time(0);
-      tm* strTime = localtime(&currentTime);
-      _Year = strTime->tm_year + 1900;
-      _Month = strTime->tm_mon + 1;
-      _Day = strTime->tm_mday;
-  }
+        time_t currentTime = time(0);
+        tm* strTime = localtime(&currentTime);
+        _Year = strTime->tm_year + 1900;
+        _Month = strTime->tm_mon + 1;
+        _Day = strTime->tm_mday;
+    }
+   
   
    static int NumberOfDaysInYear(short& Year)
    {

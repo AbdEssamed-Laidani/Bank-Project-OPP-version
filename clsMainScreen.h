@@ -10,6 +10,7 @@
 #include "clsTransactionScreen.h"
 #include "clsUserManageScreen.h"
 #include "Global.h"
+#include "clsLoginRegister.h"
 class clsMainScreen : protected clsScreen
 {
 private:
@@ -21,7 +22,8 @@ private:
 		enFindClient = 5,
 		enTransaction = 6,
 		enManageUsers = 7,
-		enLogout = 8
+		enLoginRegister = 8,
+		enLogout = 9
 	};
 	static void _ClearScreen()
 	{
@@ -60,6 +62,10 @@ private:
 	static void _ManageUsersScreen()
 	{
 		clsUserManageScreen::ShowManageUserScreen();
+	}
+	static void _ShowLoginRegister()
+	{
+		clsLoginRegister::ShowLoginRegister();
 	}
 	static void _Logout()
 	{
@@ -105,6 +111,11 @@ private:
 			_ManageUsersScreen();
 			_GoBackToMainScreen();
 			break;
+		case enLoginRegister:
+			_ClearScreen();
+			_ShowLoginRegister();
+			_GoBackToMainScreen();
+			break;
 		case enLogout:
 			_ClearScreen();
 			_Logout();
@@ -115,7 +126,7 @@ private:
 	}
 	static short _ReadMainMenuOption()
 	{
-		return clsInputValidate::ReadPositiveNumberInRange("Choose an option [1-8]: ", 1, 8);
+		return clsInputValidate::ReadPositiveNumberInRange("Choose an option [1-9]: ", 1, 9);
 	}
 	public:
 		static void ShowMainScreen()
@@ -133,7 +144,8 @@ private:
 			std::cout << "\t\t\t\t\t[5] Find Client" << std::endl;
 			std::cout << "\t\t\t\t\t[6] Transaction" << std::endl;
 			std::cout << "\t\t\t\t\t[7] Manage Users" << std::endl;
-			std::cout << "\t\t\t\t\t[8] Logout" << std::endl;
+			std::cout << "\t\t\t\t\t[8] Login Register" << std::endl;
+			std::cout << "\t\t\t\t\t[9] Logout" << std::endl;
 			std::cout << "\t\t\t\t\t======================================" << std::endl;
 			std::cout << "\t\t\t\t\t"; _PerformMainMenuOption((enMainMenuOptions)_ReadMainMenuOption());
 		}

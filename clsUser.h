@@ -6,10 +6,19 @@
 #include "clsInputValidate.h"
 #include "clsPerson.h"
 #include "clsString.h"
-
+#include "clsDate.h"
 
 class clsUser : public clsPerson
 {
+public:
+	struct stLoginRegister
+	{
+		std::string RegisterDate;
+		std::string Username;
+		std::string Passowrd;
+		int Permisstion = 0;
+	};
+
 private:
 	enum enMode { EmptyMode = 0, UpdateMode, AddNewMode };
 	enMode _Mode;
@@ -18,6 +27,46 @@ private:
 	bool _MarkedForDeleted = false;
 	int _Permisstions;
 
+	static stLoginRegister _ConvertLoginLineToRegister(const std::string& Line, const std::string& Delimiter)
+	{
+		stLoginRegister _LoginRegister;
+		std::vector <std::string> vRegister = clsString::SplitText(Line, Delimiter);
+		_LoginRegister.RegisterDate = vRegister.at(0);
+		_LoginRegister.Username = vRegister.at(1);
+		_LoginRegister.Passowrd = vRegister.at(2);
+		_LoginRegister.Permisstion = std::stoi(vRegister.at(3));
+		return _LoginRegister;
+	}
+	static std::vector <stLoginRegister> _LoadUsersLoginRegister()
+	{
+		std::vector <stLoginRegister> vLogs;
+		std::fstream LoginFile;
+		LoginFile.open("Logs.txt", std::ios::in);
+		if (LoginFile.is_open())
+		{
+			std::string RegisterLine;
+			while (std::getline(LoginFile, RegisterLine))
+			{
+				vLogs.push_back(_ConvertLoginLineToRegister(RegisterLine, " #//# "));
+			}
+			LoginFile.close();
+		}
+		else
+		{
+			std::cout << "couldn't open the file!\n";
+		}
+		return vLogs;
+	}
+	std::string _PrepareRecord(std::string Delimiter = " #//# ")
+	{
+		std::string record;
+		record += clsDate::GetSystemDateString() + Delimiter;
+		record += _UserName + Delimiter;
+		record += _Password + Delimiter;
+		record += std::to_string(_Permisstions);
+		return record;
+	}
+	
 	static clsUser _ConvertLineToUserObject(const std::string &Line,const std::string &Delimiter)
 	{
 		std::vector <std::string> vUser;
@@ -110,13 +159,15 @@ private:
 	{
 		_AddUserToFile(_ConvertUserObjectToLine(*this, " #//# "));
 	}
+		
 public:
 
 	enum enPermistions {
 		All = -1, pList = 1, pAdd = 2,
 		pDelete = 4, pUpdate = 8, pFind = 16,
-		pTransactions = 32, pManage = 64
+		pTransactions = 32, pManage = 64, pLoginRegister = 128
 	};
+
 
 
 	clsUser(enMode Mode, const std::string& FirstName, const std::string& LastName,
@@ -276,4 +327,27 @@ public:
 		else
 			return false;
 	}
+	void RegisterLogin()
+	{
+		std::string record = _PrepareRecord();
+		std::fstream MyFile;
+		MyFile.open("Logs.txt", std::ios::app);
+		if (MyFile.is_open())
+		{
+			MyFile << record << std::endl;
+		}
+		else
+		{
+			std::cout << "couldn't open the file!\n";
+			return;
+		}
+	}
+
+	static std::vector <stLoginRegister> GetUserLoginRegisterList()
+	{
+		return _LoadUsersLoginRegister();
+	}
+
+
+
 };

@@ -9,34 +9,59 @@ class clsLoginScreen : protected clsScreen
 {
 private:
 
-	static void _Login()
+	
+	static bool _Login()
 	{
 		bool LoginFaild = false;
+		short TrailsCounter;
+		
 		std::string Username, Password, Title = "\t   Login";
-		clsScreen::_ClearScreen();
-		clsScreen::_DrawHeaderScreen(Title);
 
-		do
-		{
-			if (LoginFaild)
+		
+			TrailsCounter = 3;
+			clsScreen::_ClearScreen();
+			clsScreen::_DrawHeaderScreen(Title);
+
+			do
 			{
-				clsScreen::_ClearScreen();
-				clsScreen::_DrawHeaderScreen(Title);
-				std::cout << "Incorrect username or password!\n";
-			}
-			Username = clsInputValidate::ReadString("Enter username: ");
-			Password = clsInputValidate::ReadString("Enter password: ");
-			CurrentUser = clsUser::Find(Username, Password);
-			LoginFaild = CurrentUser.isEmpty();
-		} while (LoginFaild);
-		clsMainScreen::ShowMainScreen();
+				Username = clsInputValidate::ReadString("Enter username: ");
+				Password = clsInputValidate::ReadString("Enter password: ");
+				CurrentUser = clsUser::Find(Username, Password);
+				LoginFaild = CurrentUser.isEmpty();
+
+				if (LoginFaild)
+				{
+					clsScreen::_ClearScreen();
+					clsScreen::_DrawHeaderScreen(Title);
+
+					TrailsCounter--;
+
+					if (TrailsCounter == 0)
+					{
+						std::cout << "You are locked after " << 3 << " faild trails\n";
+						return false;
+					}
+					std::cout << "Incorrect username or password!\n";
+					std::cout << "You have " << TrailsCounter << " trails to login\n";
+
+
+				}
+			} while (LoginFaild && (TrailsCounter > 0));
+
+			CurrentUser.RegisterLogin();
+				clsMainScreen::ShowMainScreen();
+
+				return true;
+		
 	}
 
 public:
-	static void ShowLoginScreen()
-	{
-		_Login();
-	}
+	
+		static bool ShowLoginScreen()
+		{
 
+				return _Login();	
+		}
+	
 };
 

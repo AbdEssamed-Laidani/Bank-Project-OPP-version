@@ -146,6 +146,7 @@
     <ClInclude Include="clsPermistions.h" />
     <ClInclude Include="clsPerson.h" />
     <ClInclude Include="clsScreen.h" />
+    <ClInclude Include="clsLoginRegister.h" />
     <ClInclude Include="clsTotalBalancesScreen.h" />
     <ClInclude Include="clsTransactionScreen.h" />
     <ClInclude Include="clsUpdateClientScreen.h" />

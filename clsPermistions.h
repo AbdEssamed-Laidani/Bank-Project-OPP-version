@@ -21,10 +21,10 @@ public:
         {
             std::vector < std::string> vMenuItems = { "Show Client List","Add New Client",
             "Delete Client","Update Client Info","Find Client","Transaction","Manage Users",
-            };
+                "Login Register"};
             std::vector < clsUser::enPermistions > vPermisions = { clsUser::enPermistions::pList, clsUser::enPermistions::pAdd,
                 clsUser::enPermistions::pDelete, clsUser::enPermistions::pUpdate, clsUser::enPermistions::pFind,
-                clsUser::enPermistions::pTransactions, clsUser::enPermistions::pManage };
+                clsUser::enPermistions::pTransactions, clsUser::enPermistions::pManage,clsUser::enPermistions::pLoginRegister };
 
             for (short i = 0; i < (int)vMenuItems.size(); i++)
             {
