@@ -589,7 +589,7 @@ public:
         return Result;
     }
 
-    static std::string EncryptionText(std::string Text, int EncryptionKey)
+    static std::string EncryptionText(std::string Text, short EncryptionKey)
     {
         for (int i = 0; i < Text.length(); i++)
         {
@@ -597,13 +597,13 @@ public:
         }
         return Text;
     }
-   static std::string DecryptionText(std::string Text, int DecryptionKey)
+    static std::string DecryptionText(std::string Text, short DecryptionKey)
     {
-        for (int i = 0; i < Text.length(); i++)
-        {
-            Text[i] = char(int(Text[i]) - DecryptionKey);
-        }
-        return Text;
+       for (int i = 0; i < Text.length(); i++)
+       {
+           Text[i] = char(int(Text[i]) - DecryptionKey);
+       }
+       return Text;
     }
 
 

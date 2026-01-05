@@ -4,14 +4,97 @@
 #include <fstream>
 #include "clsString.h"
 #include "clsPerson.h"
-class clsBankClient:public clsPerson
+#include "clsUser.h"
+#include "Global.h"
+class clsBankClient :public clsPerson
 {
+
+
+public:
+
+	struct stTransferLog
+	{
+		double sourceBalance = 0.0f;
+		double ReciverBalance = 0.0f;
+		double TransferAmount = 0.0f;
+		std::string TransferDate;
+		std::string sourceAccNumber;
+		std::string ReciverAccNumber;
+		std::string UserName;
+	};
+
+private:
+
 	enum enMode { EmptyMode = 0, UpdateMode = 1, AddNewMode = 2 };
 	enMode _Mode;
 	std::string _AccountNumber;
 	std::string _PinCode;
 	double _Balance;
 	bool _MarkForDelete = false;
+
+
+	static stTransferLog _ConvertTransferLineToLog(const std::string& Line, const std::string& Delimiter = " #//# ")
+	{
+		stTransferLog _TransferLog;
+		std::vector <std::string> vLog = clsString::SplitText(Line, Delimiter);
+		_TransferLog.TransferDate = vLog.at(0);
+		_TransferLog.sourceAccNumber = vLog.at(1);
+		_TransferLog.ReciverAccNumber = vLog.at(2);
+		_TransferLog.TransferAmount = std::stod(vLog.at(3));
+		_TransferLog.sourceBalance = std::stod(vLog.at(4));
+		_TransferLog.ReciverBalance = std::stod(vLog.at(5));
+		_TransferLog.UserName = vLog.at(6);
+		return _TransferLog;
+	}
+	static std::vector <stTransferLog> _LoadTransfersLog()
+	{
+		std::vector <stTransferLog> vLogs;
+		std::fstream TransfersLogFile;
+		TransfersLogFile.open("TransferLogs.txt", std::ios::in);
+		if (TransfersLogFile.is_open())
+		{
+			std::string TransfersLine;
+			while (std::getline(TransfersLogFile, TransfersLine))
+			{
+				vLogs.push_back(_ConvertTransferLineToLog(TransfersLine, " #//# "));
+			}
+			TransfersLogFile.close();
+		}
+		else
+		{
+			std::cout << "couldn't open the file!\n";
+		}
+		return vLogs;
+	}
+
+
+	 std::string _PrepareTransferLogsToRecord(double Amount, clsBankClient& ClientTransferTo, const std::string& Delimiter = " #//# ")
+	{
+		std::string record;
+		record += clsDate::GetSystemDateString() + Delimiter;
+		record += _AccountNumber + Delimiter;
+		record += ClientTransferTo.GetAccountNumber() + Delimiter;
+		record += std::to_string(Amount) + Delimiter;
+		record += std::to_string(_Balance) + Delimiter;
+		record += std::to_string(ClientTransferTo.GetBalance()) + Delimiter;
+		record += CurrentUser.GetUsername();
+		return record;
+	}
+	 void _TransferRegister(double Amount, clsBankClient& ClientTransferTo)
+	 {
+		 std::string record = _PrepareTransferLogsToRecord(Amount, ClientTransferTo);
+		 std::fstream MyFile;
+		 MyFile.open("TransferLogs.txt", std::ios::app);
+		 if (MyFile.is_open())
+		 {
+			 MyFile << record << std::endl;
+		 }
+		 else
+		 {
+			 std::cout << "couldn't open the file!\n";
+			 return;
+		 }
+	 }
 	static clsBankClient _ConvertLineToClientObject(const std::string &Line,std::string Delimiter = " #//# ")
 	{
 		std::vector <std::string> vClient = clsString::SplitText(Line, Delimiter);
@@ -243,6 +326,26 @@ public:
 	{
 		DepositAmount(-1 * Amount);
 	}
+	
+
+	bool TransferAmount(double Amount, clsBankClient& ClientTransferTo)
+	{
+		if (Amount > _Balance)
+		{
+			return false;
+		}
+		WithDrawAmount(Amount);
+		ClientTransferTo.DepositAmount(Amount);
+		_TransferRegister(Amount, ClientTransferTo);
+		return true;
+
+	}
+
+	static std::vector <stTransferLog> GetTransfersLogList()
+	{
+		return _LoadTransfersLog();
+	}
+
 	
 };
 

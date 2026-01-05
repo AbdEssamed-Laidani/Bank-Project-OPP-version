@@ -7,7 +7,7 @@
 #include "clsPerson.h"
 #include "clsString.h"
 #include "clsDate.h"
-
+#include "clsUtil.h"
 class clsUser : public clsPerson
 {
 public:
@@ -26,17 +26,18 @@ private:
 	std::string _Password;
 	bool _MarkedForDeleted = false;
 	int _Permisstions;
-
+	
 	static stLoginRegister _ConvertLoginLineToRegister(const std::string& Line, const std::string& Delimiter)
 	{
 		stLoginRegister _LoginRegister;
 		std::vector <std::string> vRegister = clsString::SplitText(Line, Delimiter);
 		_LoginRegister.RegisterDate = vRegister.at(0);
 		_LoginRegister.Username = vRegister.at(1);
-		_LoginRegister.Passowrd = vRegister.at(2);
+		_LoginRegister.Passowrd = clsUtil::DecryptionText(vRegister.at(2), 2);
 		_LoginRegister.Permisstion = std::stoi(vRegister.at(3));
 		return _LoginRegister;
 	}
+	
 	static std::vector <stLoginRegister> _LoadUsersLoginRegister()
 	{
 		std::vector <stLoginRegister> vLogs;
@@ -57,12 +58,12 @@ private:
 		}
 		return vLogs;
 	}
-	std::string _PrepareRecord(std::string Delimiter = " #//# ")
+	std::string _PrepareLoginRegisterRecord(std::string Delimiter = " #//# ")
 	{
 		std::string record;
 		record += clsDate::GetSystemDateString() + Delimiter;
 		record += _UserName + Delimiter;
-		record += _Password + Delimiter;
+		record += clsUtil::EncryptionText(GetPassword(), 2) + Delimiter;
 		record += std::to_string(_Permisstions);
 		return record;
 	}
@@ -72,7 +73,7 @@ private:
 		std::vector <std::string> vUser;
 		vUser = clsString::SplitText(Line, Delimiter);
 		return clsUser(enMode::UpdateMode, vUser.at(0), vUser.at(1), vUser.at(2), vUser.at(3),
-			vUser.at(4), vUser.at(5), stoi(vUser.at(6)));
+			vUser.at(4), clsUtil::DecryptionText(vUser.at(5), 2), stoi(vUser.at(6)));
 	}
     static std::string _ConvertUserObjectToLine(clsUser& User,const std::string &Delimiter)
 	{
@@ -82,7 +83,7 @@ private:
 		Record += User.GetEmail() + Delimiter;
 		Record += User.GetPhone() + Delimiter;
 		Record += User.GetUsername() + Delimiter;
-		Record += User.GetPassword() + Delimiter;
+		Record += clsUtil::EncryptionText(User.GetPassword(), 2) +Delimiter;
 		Record += std::to_string(User.GetPermistions());
 		return Record;
 	}
@@ -329,7 +330,7 @@ public:
 	}
 	void RegisterLogin()
 	{
-		std::string record = _PrepareRecord();
+		std::string record = _PrepareLoginRegisterRecord();
 		std::fstream MyFile;
 		MyFile.open("Logs.txt", std::ios::app);
 		if (MyFile.is_open())
@@ -347,7 +348,6 @@ public:
 	{
 		return _LoadUsersLoginRegister();
 	}
-
 
 
 };

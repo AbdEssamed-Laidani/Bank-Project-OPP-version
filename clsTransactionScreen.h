@@ -6,14 +6,16 @@
 #include "clsWithdrawScreen.h"
 #include "clstotalBalancesScreen.h"
 #include "clsUser.h"
+#include "clsTransferScreen.h"
+#include "clsTransferLogScreen.h"
 class clsTransactionScreen : protected clsScreen
 {
 
 private:
-	enum enTransactionsMenu { Deposit = 1, Withdraw, TotalBalances, MainMenu };
+	enum enTransactionsMenu { Deposit = 1, Withdraw, TotalBalances, Transfer, TransferLog, MainMenu };
 	static short _ReadTransactionMenuOption()
 	{
-		return clsInputValidate::ReadPositiveNumberInRange("Choose an option [1-4]: ", 1, 4);
+		return clsInputValidate::ReadPositiveNumberInRange("Choose an option [1-6]: ", 1, 6);
 	}
 	static void _ClearScreen()
 	{
@@ -37,7 +39,10 @@ private:
 	{
 		clsTotalBalancesScreen::ShowTotalBalances();
 	}
-
+	static void _ShowTransferLogScreen()
+	{
+		clsTransferLogScreen::ShowTransferLog();
+	}
 	static void _PerformTransactionMenuOption(enTransactionsMenu TransactionMenuOption)
 	{
 
@@ -56,6 +61,16 @@ private:
 			case TotalBalances:
 				_ClearScreen();
 				_TotalBalancesScreen();
+				_GoBackToTransactionScreen();
+				break;
+			case Transfer:
+				_ClearScreen();
+				clsTransferScreen::ShowTransferScreen();
+				_GoBackToTransactionScreen();
+				break;
+			case TransferLog:
+				_ClearScreen();
+				_ShowTransferLogScreen();
 				_GoBackToTransactionScreen();
 				break;
 			case MainMenu:
@@ -79,7 +94,9 @@ public:
 		std::cout << "\t\t\t\t\t[1] Deposit" << std::endl;
 		std::cout << "\t\t\t\t\t[2] Withdraw" << std::endl;
 		std::cout << "\t\t\t\t\t[3] Total Balances" << std::endl;
-		std::cout << "\t\t\t\t\t[4] Main Menu" << std::endl;
+		std::cout << "\t\t\t\t\t[4] Transfer" << std::endl;
+		std::cout << "\t\t\t\t\t[5] Transfer Logs" << std::endl;
+		std::cout << "\t\t\t\t\t[6] Main Menu" << std::endl;
 		std::cout << "\t\t\t\t\t======================================" << std::endl;
 		std::cout << "\t\t\t\t\t"; _PerformTransactionMenuOption((enTransactionsMenu)_ReadTransactionMenuOption());
 	}
