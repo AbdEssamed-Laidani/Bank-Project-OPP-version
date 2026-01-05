@@ -361,3 +361,31 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Visual Studio Temporary Files
+.vs/
+/x64/
+/Debug/
+/Release/
+*.obj
+*.log
+*.tlog
+*.lastbuildstate
+*.idb
+*.pdb
+*.ilk
+*.exe
+*.recipe
+*.ipch
+*.aps
+*.ncb
+*.user
+*.suo
+*.db
+*.opendb
+
+# Project files that are machine-dependent
+*.vcxproj.user
+
+# Backup files
+*.bak
