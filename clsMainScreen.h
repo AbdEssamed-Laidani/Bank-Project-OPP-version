@@ -137,7 +137,7 @@ private:
 	}
 	static short _ReadMainMenuOption()
 	{
-		return clsInputValidate::ReadPositiveNumberInRange("Choose an option [1-10]: ", 1, 10);
+		return clsInputValidate::ReadPositiveNumberInRange<int>("Choose an option [1-10]: ", 1, 10);
 	}
 	public:
 		static void ShowMainScreen()

@@ -15,7 +15,7 @@ private:
 		Client.SetEmail(clsInputValidate::ReadString("\tEnter your email: "));
 		Client.SetPhone(clsInputValidate::ReadString("\tEnter your phone number: "));
 		Client.SetPinCode(clsInputValidate::ReadString("\tEnter your pincode: "));
-		Client.SetBalance(clsInputValidate::ReadPositiveDoubleNumber("\tEnter your balance: "));
+		Client.SetBalance(clsInputValidate::ReadPositiveNumber<float>("\tEnter your balance: "));
 
 	}
 

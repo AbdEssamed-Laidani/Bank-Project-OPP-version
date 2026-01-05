@@ -36,7 +36,7 @@ class clsDepositScreen : protected clsScreen
 			}
 			clsBankClient Client = clsBankClient::Find(AccountNumber);
 			_PrintClient(Client);
-			double Amount = clsInputValidate::ReadPositiveDoubleNumber("Enter amount to deposit: ");
+			double Amount = clsInputValidate::ReadPositiveNumber<double>("Enter amount to deposit: ");
 			if (toupper(clsInputValidate::ReadLetter("Are you sure you want to deposit [" + std::to_string(Amount) + "] to account number [" + AccountNumber + "]? [Y/N]: ")) == 'Y')
 			{
 				Client.DepositAmount(Amount);

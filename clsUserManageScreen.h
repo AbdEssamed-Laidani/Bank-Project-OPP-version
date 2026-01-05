@@ -18,7 +18,7 @@ private:
 	
     static short _ReadOption()
     {
-        return clsInputValidate::ReadPositiveNumberInRange("Choose an option [1-6]: ", 1, 6);
+        return clsInputValidate::ReadPositiveNumberInRange<short> ("Choose an option [1-6]: ", 1, 6);
     }
     static void _GoBackToMainScreen()
     {

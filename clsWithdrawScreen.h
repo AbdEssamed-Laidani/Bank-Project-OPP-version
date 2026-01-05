@@ -35,10 +35,10 @@ private:
 		}
 		clsBankClient Client = clsBankClient::Find(AccountNumber);
 		_PrintClient(Client);
-		double Amount = clsInputValidate::ReadPositiveDoubleNumber("Enter amount to withdraw: ");
+		double Amount = clsInputValidate::ReadPositiveNumber<double>("Enter amount to withdraw: ");
 		while (Amount > Client.GetBalance())
 		{
-			Amount = clsInputValidate::ReadPositiveDoubleNumber("It's greater then avalible, enter amount to withdraw: ");
+			Amount = clsInputValidate::ReadPositiveNumber<double>("It's greater then avalible, enter amount to withdraw: ");
 		}
 		if (toupper(clsInputValidate::ReadLetter("Are you sure you want to withdraw [" + std::to_string(Amount) + "] from account number [" + AccountNumber + "]? [Y/N]: ")) == 'Y')
 		{

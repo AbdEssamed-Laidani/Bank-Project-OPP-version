@@ -24,15 +24,15 @@ private:
 	{
 		double amount = 0.0;
 		double CurrentBalance = Client.GetBalance();
-		amount = clsInputValidate::ReadPositiveDoubleNumber(message);
+		amount = clsInputValidate::ReadPositiveNumber<double>(message);
 		while (amount > CurrentBalance || amount <= 0)
 		{
 			clsScreen::_ClearScreen();
 			clsScreen::_DrawHeaderScreen("\t   Transfer Screen");
 			if (amount > CurrentBalance)
-				amount = clsInputValidate::ReadPositiveDoubleNumber("This amount is greater than available, r-enter amount: ");
+				amount = clsInputValidate::ReadPositiveNumber<double>("This amount is greater than available, r-enter amount: ");
 			else
-				amount = clsInputValidate::ReadPositiveDoubleNumber("Enter valid amount to transfer : ");
+				amount = clsInputValidate::ReadPositiveNumber<double>("Enter valid amount to transfer : ");
 
 		} 
 		return amount;

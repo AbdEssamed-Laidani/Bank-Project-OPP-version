@@ -86,9 +86,6 @@
     <ClInclude Include="clsUserManageScreen.h">
       <Filter>Header Files\screens\Users</Filter>
     </ClInclude>
-    <ClInclude Include="clsUpdateUserScreen.h">
-      <Filter>Header Files\screens\Clients</Filter>
-    </ClInclude>
     <ClInclude Include="clsUpdateClientScreen.h">
       <Filter>Header Files\screens\Clients</Filter>
     </ClInclude>
@@ -133,6 +130,9 @@
     </ClInclude>
     <ClInclude Include="clsUpdateCurrencyRateScreen.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="clsUpdateUserScreen.h">
+      <Filter>Header Files\screens\Users</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

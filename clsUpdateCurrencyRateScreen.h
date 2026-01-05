@@ -28,7 +28,7 @@ private:
 	{
 		std::cout << "\nUpdate currency rate: \n";
 		std::cout << "------------------------\n";
-		float NewRate = clsInputValidate::ReadPositiveFloatNumber("Enter new rate: ");
+		float NewRate = clsInputValidate::ReadPositiveNumber<float>("Enter new rate: ");
 		Currency.UpdateRate(NewRate);
 	}
 	static void _UpdateCurrencyRate()

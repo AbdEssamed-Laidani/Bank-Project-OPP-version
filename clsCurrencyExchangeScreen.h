@@ -72,7 +72,7 @@ private:
 	}
 	static int ReadMenuOption()
 	{
-		return clsInputValidate::ReadPositiveNumberInRange("Choose an option [1-5]: ", 1, 5);
+		return clsInputValidate::ReadPositiveNumberInRange<int>("Choose an option [1-5]: ", 1, 5);
 	}
 public:
 

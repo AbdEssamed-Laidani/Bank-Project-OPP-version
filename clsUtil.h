@@ -364,49 +364,6 @@ public:
         Date2 = temp;
     }
     
-    static int ReadPositiveNumber(std::string message, std::string ErrorMessage) {
-        int number = 1;
-        do {
-            std::cout << message;
-            std::cin >> number;
-            while (std::cin.fail()) {
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits< std::streamsize>::max(), '\n');
-                std::cout << ErrorMessage;
-                std::cin >> number;
-            }
-        } while (number < 0);
-        return number;
-    }
-    static int ReadPositiveNumberInRange(std::string message, std::string ErrorMessage, int From, int To) {
-        int number = 1;
-        do {
-
-            std::cout << message;
-            std::cin >> number;
-            while (std::cin.fail()) {
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits< std::streamsize>::max(), '\n');
-                std::cout << ErrorMessage;
-                std::cin >> number;
-            }
-        } while (number < From || number > To);
-
-
-        return number;
-    }
-    static int ReadValidNumber(std::string message, std::string ErrorMessage) {
-        int number = 0;
-        std::cout << message;
-        std::cin >> number;
-        while (std::cin.fail()) {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits< std::streamsize>::max(), '\n');
-            std::cout << ErrorMessage;
-            std::cin >> number;
-        }
-        return number;
-    }
 
     static void RemoveElement(int arr[], int& arrLength, int Target)
     {

@@ -35,7 +35,7 @@ private:
 	}
 	static float _ReadExchangeAmount()
 	{
-		return clsInputValidate::ReadPositiveFloatNumber("Enter amount to exchange: ");
+		return clsInputValidate::ReadPositiveNumber<float>("Enter amount to exchange: ");
 	}
 	
 	static void _PrintExchange(float Amount, const std::string& Currency1Code, const std::string& Currency2Code, float ExchangedAmount)

@@ -51,7 +51,7 @@ private:
 	static void _FindCurrency()
 	{
 		_DrawHeader();
-		enSeachMethod SearchMethod = (enSeachMethod)clsInputValidate::ReadPositiveNumberInRange("Find by: [1] Code, [2] Country: ", 1, 2);
+		enSeachMethod SearchMethod = (enSeachMethod)clsInputValidate::ReadPositiveNumberInRange<int>("Find by: [1] Code, [2] Country: ", 1, 2);
 		switch (SearchMethod)
 		{
 		case enSeachMethod::ByCode:

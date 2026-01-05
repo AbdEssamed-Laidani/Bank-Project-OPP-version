@@ -15,7 +15,7 @@ private:
 	enum enTransactionsMenu { Deposit = 1, Withdraw, TotalBalances, Transfer, TransferLog, MainMenu };
 	static short _ReadTransactionMenuOption()
 	{
-		return clsInputValidate::ReadPositiveNumberInRange("Choose an option [1-6]: ", 1, 6);
+		return clsInputValidate::ReadPositiveNumberInRange<int> ("Choose an option [1-6]: ", 1, 6);
 	}
 	static void _ClearScreen()
 	{

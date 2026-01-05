@@ -29,7 +29,7 @@ private:
 		Client.SetEmail(clsInputValidate::ReadString("Enter your email: "));
 		Client.SetPhone(clsInputValidate::ReadString("Enter your phone number: "));
 		Client.SetPinCode(clsInputValidate::ReadString("Enter your pincode: "));
-		Client.SetBalance(clsInputValidate::ReadPositiveDoubleNumber("Enter your balance: "));
+		Client.SetBalance(clsInputValidate::ReadPositiveNumber<double>("Enter your balance: "));
 
 	}
 	static void _UpdateClient()
